@@ -1,11 +1,20 @@
-#!/bin/sh
+# This file is distributed under the MIT license.
+# See LICENSE file in the project root for details.
 
-pacaur -S trash-cli
+# Keep this script idempotent.
+
+if ! which -q pacaur; then
+    curl -L https://goo.gl/oC8iDk | sh
+fi
+
+if ! which -q trash; then
+    pacaur -S trash-cli
+fi
 
 mkdir -p $HOME/.bashrc.d
 mkdir -p $HOME/.profile.d
 
-cat <<-'EOF' >$HOME/.bashrc
+cat <<'EOF' >$HOME/.bashrc
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
@@ -21,16 +30,24 @@ exit_status_face() {
 
 PS1='\n\u@\h:\w\n$(exit_status_face)'
 
+# Load scripts in ~/.bashrc.d
+if [ -d $HOME/.bashrc.d ]; then
+    for script in $HOME/.bashrc.d/*.sh; do
+        test -r "$script" && . "$script"
+    done
+    unset script
+fi
+
 eval "$(direnv hook bash)"  # must be placed on the last line
 EOF
 
-cat <<-'EOF' >/$HOME/.bash_profile
-# Load profiles from ~/.profile.d
+cat <<'EOF' >/$HOME/.bash_profile
+# Load scripts from ~/.profile.d
 if [ -d $HOME/.profile.d ]; then
-    for profile in $HOME/.profile.d/*.sh; do
-        test -r "$profile" && . "$profile"
+    for script in $HOME/.profile.d/*.sh; do
+        test -r "$script" && . "$script"
     done
-    unset profile
+    unset script
 fi
 
 export PATH=$HOME/bin:$PATH
@@ -40,7 +57,7 @@ export PATH=$HOME/bin:$PATH
 [[ -z $DISPLAY && $(tty) == /dev/tty1 ]] && exec startx
 EOF
 
-cat <<-'EOF' >/$HOME/.bash_aliases
+cat <<'EOF' >/$HOME/.bash_aliases
 alias ls='ls --color=auto -F'
 alias la='ls -a'
 alias ll='la -l'

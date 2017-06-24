@@ -1,13 +1,15 @@
-#!/bin/sh
+# This file is distributed under the MIT license.
+# See LICENSE file in the project root for details.
 
-mkdir -p $HOME/.profle.d
+# Keep this script idempotent.
 
-# See https://wiki.archlinux.org/index.php/SSH_keys#ssh-agent
-cat <<'EOF' >$HOME/.profile.d/ssh-agent.sh
-if ! pgrep -u "$USER" ssh-agent > /dev/null; then
-    ssh-agent > $HOME/.ssh-agent-thing
+if ! which -q keychain; then
+    pacaur -S keychain
 fi
-if [[ "$SSH_AGENT_PID" == "" ]]; then
-    eval "$(<$HOME/.ssh-agent-thing)"
-fi
+
+mkdir -p $HOME/.bashrc.d
+
+# https://wiki.archlinux.org/index.php/SSH_keys#Keychain
+cat <<'EOF' >$HOME/.bashrc.d/keychain.sh
+eval $(keychain --eval --quiet id_rsa)
 EOF
