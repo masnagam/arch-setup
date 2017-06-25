@@ -7,6 +7,10 @@ if ! which pacaur >/dev/null 2>&1; then
     curl -L https://goo.gl/oC8iDk | sh
 fi
 
+if ! which unzip >/dev/null 2>&1; then
+    pacaur -S unzip
+fi
+
 if ! which trash >/dev/null 2>&1; then
     pacaur -S trash-cli
 fi
