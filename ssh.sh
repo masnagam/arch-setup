@@ -3,7 +3,7 @@
 
 # Keep this script idempotent.
 
-if ! which -q keychain; then
+if ! which keychain >/dev/null 2>&1; then
     pacaur -S keychain
 fi
 

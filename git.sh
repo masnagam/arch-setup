@@ -3,6 +3,10 @@
 
 # Keep this script idempotent.
 
+if ! which git >/dev/null 2>&1; then
+    pacaur -S git
+fi
+
 git config --global fetch.prune true
 git config --global merge.ff false
 git config --global pull.ff only

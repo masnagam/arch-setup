@@ -3,11 +3,11 @@
 
 # Keep this script idempotent.
 
-if ! which -q pacaur; then
+if ! which pacaur >/dev/null 2>&1; then
     curl -L https://goo.gl/oC8iDk | sh
 fi
 
-if ! which -q trash; then
+if ! which trash >/dev/null 2>&1; then
     pacaur -S trash-cli
 fi
 

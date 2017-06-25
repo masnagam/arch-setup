@@ -3,8 +3,12 @@
 
 # Keep this script idempotent.
 
-if ! which -q emacs; then
+if ! which emacs >/dev/null 2>&1; then
     pacaur -S emacs
+fi
+
+if ! which cask >/dev/null 2>&1; then
+    pacaur -S cask
 fi
 
 if [ ! -e $HOME/.emacs.d ]; then
