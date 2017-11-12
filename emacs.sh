@@ -11,6 +11,10 @@ if ! which cask >/dev/null 2>&1; then
     pacaur -S cask
 fi
 
+if ! which ripgrep >/dev/null 2>&1; then
+    pacaur -S ripgrep
+fi
+
 if [ ! -e $HOME/.emacs.d ]; then
     git clone git@bitbucket.org:masnagam/.emacs.d.git $HOME/.emacs.d
 fi
