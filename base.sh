@@ -42,10 +42,12 @@ if [ -d $HOME/.bashrc.d ]; then
     unset script
 fi
 
-eval "$(direnv hook bash)"  # must be placed on the last line
+if which direnv >/dev/null 2>&1; then
+    eval "$(direnv hook bash)"
+fi
 EOF
 
-cat <<'EOF' >/$HOME/.bash_profile
+cat <<'EOF' >$HOME/.bash_profile
 # Load scripts from ~/.profile.d
 if [ -d $HOME/.profile.d ]; then
     for script in $HOME/.profile.d/*.sh; do
@@ -57,11 +59,9 @@ fi
 export PATH=$HOME/bin:$PATH
 
 [[ -f $HOME/.bashrc ]] && . $HOME/.bashrc
-
-[[ -z $DISPLAY && $(tty) == /dev/tty1 ]] && exec startx
 EOF
 
-cat <<'EOF' >/$HOME/.bash_aliases
+cat <<'EOF' >$HOME/.bash_aliases
 alias ls='ls --color=auto -F'
 alias la='ls -a'
 alias ll='la -l'
