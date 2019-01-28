@@ -4,35 +4,68 @@
 # Keep this script idempotent.
 
 if ! which pacaur >/dev/null 2>&1; then
+    echo 'Installing pacaur...'
     curl -L https://goo.gl/oC8iDk | sh
 fi
 
+if ! pacaur -Qs bash-completion >/dev/null 2>&1; then
+    echo 'Installing bash-completion...'
+    pacaur -S bash-completion
+fi
+
+if ! which direnv >/dev/null 2>&1; then
+    echo 'Installing direnv...'
+    pacaur -S direnv
+fi
+
 if ! which unzip >/dev/null 2>&1; then
+    echo 'Installing unzip...'
     pacaur -S unzip
 fi
 
 if ! which trash >/dev/null 2>&1; then
+    echo 'Installing trash-cli...'
     pacaur -S trash-cli
 fi
 
 mkdir -p $HOME/.bashrc.d
 mkdir -p $HOME/.profile.d
 
+echo 'Installing .bashrc...'
 cat <<'EOF' >$HOME/.bashrc
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
 source $HOME/.bash_aliases
 
-exit_status_face() {
-    if [ $? -eq 0 ]; then
-        echo '^_^)/ '
+my_last_command_status_face() {
+    local _status=$?
+
+    # Use \001 and \002 instead of \[ and \].  The latter texts won't be
+    # interpreted as espace sequences and they will be shown as normal texts.
+    local _GREEN='\001\e[32m\002'
+    local _RED='\001\e[31m\002'
+    local _RESET='\001\e[0m\002'
+
+    if [ $_status -eq 0 ]; then
+        local _color=$_GREEN
+        local _face='^_^)/'
     else
-        echo '>_<)\ '
+        local _color=$_RED
+        local _face='>_<)\\'
     fi
+
+    echo -en "${_color}${_face}${_RESET} "
 }
 
-PS1='\n\u@\h:\w\n$(exit_status_face)'
+# See https://github.com/git/git/blob/master/contrib/completion/git-prompt.sh
+source /usr/share/git/completion/git-prompt.sh
+GIT_PS1_SHOWDIRTYSTATE=1
+GIT_PS1_SHOWSTASHSTATE=1
+GIT_PS1_SHOWUNTRACKEDFILES=1
+GIT_PS1_SHOWUPSTREAM=auto
+
+PS1='\n\u@\h:\w$(__git_ps1)\n$(my_last_command_status_face)'
 
 # Load scripts in ~/.bashrc.d
 if [ -d $HOME/.bashrc.d ]; then
@@ -42,11 +75,10 @@ if [ -d $HOME/.bashrc.d ]; then
     unset script
 fi
 
-if which direnv >/dev/null 2>&1; then
-    eval "$(direnv hook bash)"
-fi
+eval "$(direnv hook bash)"  # must be placed at the last line
 EOF
 
+echo 'Installing .bash_profile...'
 cat <<'EOF' >$HOME/.bash_profile
 # Load scripts from ~/.profile.d
 if [ -d $HOME/.profile.d ]; then
@@ -61,6 +93,7 @@ export PATH=$HOME/bin:$PATH
 [[ -f $HOME/.bashrc ]] && . $HOME/.bashrc
 EOF
 
+echo 'Installing .bash_aliases...'
 cat <<'EOF' >$HOME/.bash_aliases
 alias ls='ls --color=auto -F'
 alias la='ls -a'
