@@ -9,6 +9,8 @@ source $(dirname $0)/common.sh
 
 install xorg-server
 install xorg-xinit
+install xorg-xprop
+install xorg-xev
 install xsel
 
 # i3
@@ -29,11 +31,21 @@ install noto-fonts-emoji
 install ttf-font-awesome
 install ttf-myrica
 
+sudo ln -sf /etc/fonts/conf.avail/66-noto-mono.conf /etc/fonts/conf.d/
+sudo ln -sf /etc/fonts/conf.avail/66-noto-sans.conf /etc/fonts/conf.d/
+sudo ln -sf /etc/fonts/conf.avail/66-noto-serif.conf /etc/fonts/conf.d/
+sudo ln -sf /etc/fonts/conf.avail/70-noto-cjk.conf /etc/fonts/conf.d/
+
 # Input Method
 
 install fcitx-mozc
 install fcitx-configtool
 install fcitx-im
+
+# Sound
+
+install alsa-utils
+install pulseaudio
 
 # Web Browsers
 

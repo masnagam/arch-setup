@@ -11,10 +11,10 @@ install nss-mdns
 HOSTS=$(cat <<EOF | tr '\n' ' '
 files
 mymachines
+myhostname
 mdns_minimal [NOTFOUND=return]
 resolve [!UNAVAIL=return]
 dns
-myhostname
 EOF
 )
 

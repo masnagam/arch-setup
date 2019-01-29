@@ -12,6 +12,7 @@ fi
 
 install bash-completion
 install direnv
+install systemd-boot-pacman-hook
 install trash-cli
 install unzip
 
