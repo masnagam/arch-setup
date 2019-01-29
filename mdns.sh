@@ -1,15 +1,12 @@
 # This file is distributed under the MIT license.
 # See LICENSE file in the project root for details.
 
+source $(dirname $0)/common.sh
+
 # Keep this script idempotent.
 
-if ! pacaur -Qe avahi >/dev/null 2>&1; then
-    pacaur -S avahi
-fi
-
-if ! pacaur -Qe nss-mdns >/dev/null 2>&1; then
-    pacaur -S nss-mdns
-fi
+install avahi
+install nss-mdns
 
 HOSTS=$(cat <<EOF | tr '\n' ' '
 files

@@ -1,23 +1,15 @@
 # This file is distributed under the MIT license.
 # See LICENSE file in the project root for details.
 
+source $(dirname $0)/common.sh
+
 # Keep this script idempotent.
 
-if ! which emacs >/dev/null 2>&1; then
-    pacaur -S emacs
-fi
+install emacs
+install cask
+install ripgrep
 
-if ! which cask >/dev/null 2>&1; then
-    pacaur -S cask
-fi
-
-if ! which ripgrep >/dev/null 2>&1; then
-    pacaur -S ripgrep
-fi
-
-if [ ! -e $HOME/.emacs.d ]; then
-    git clone git@bitbucket.org:masnagam/.emacs.d.git $HOME/.emacs.d
-fi
+git_clone git@github.com:masnagam/.emacs.d.git $HOME/.emacs.d
 
 mkdir -p $HOME/bin
 

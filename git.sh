@@ -1,11 +1,11 @@
 # This file is distributed under the MIT license.
 # See LICENSE file in the project root for details.
 
+source $(dirname $0)/common.sh
+
 # Keep this script idempotent.
 
-if ! which git >/dev/null 2>&1; then
-    pacaur -S git
-fi
+install git
 
 git config --global fetch.prune true
 git config --global merge.ff false

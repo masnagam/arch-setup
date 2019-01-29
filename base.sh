@@ -1,32 +1,19 @@
 # This file is distributed under the MIT license.
 # See LICENSE file in the project root for details.
 
+source $(dirname $0)/common.sh
+
 # Keep this script idempotent.
 
-if ! which pacaur >/dev/null 2>&1; then
-    echo 'Installing pacaur...'
-    curl -L https://goo.gl/oC8iDk | sh
+if ! which yay >/dev/null 2>&1; then
+    echo 'Installing yay...'
+    sh yay.sh
 fi
 
-if ! pacaur -Qs bash-completion >/dev/null 2>&1; then
-    echo 'Installing bash-completion...'
-    pacaur -S bash-completion
-fi
-
-if ! which direnv >/dev/null 2>&1; then
-    echo 'Installing direnv...'
-    pacaur -S direnv
-fi
-
-if ! which unzip >/dev/null 2>&1; then
-    echo 'Installing unzip...'
-    pacaur -S unzip
-fi
-
-if ! which trash >/dev/null 2>&1; then
-    echo 'Installing trash-cli...'
-    pacaur -S trash-cli
-fi
+install bash-completion
+install direnv
+install trash-cli
+install unzip
 
 mkdir -p $HOME/.bashrc.d
 mkdir -p $HOME/.profile.d
