@@ -8,6 +8,7 @@ source $(dirname $0)/common.sh
 # X
 
 install xorg-server
+install xorg-xdpyinfo
 install xorg-xinit
 install xorg-xprop
 install xorg-xev
@@ -46,15 +47,17 @@ install fcitx-im
 
 install alsa-utils
 install pulseaudio
+install pulseaudio-alsa
+
+# compositor
+
+install glxinfo
+install compton
 
 # Web Browsers
 
 install google-chrome
 install firefox
-
-# Communication Tools
-
-install skypeforlinux-stable-bin
 
 # Configurations
 
@@ -86,27 +89,33 @@ fi
 
 # start some nice programs
 
-if [ -d /etc/X11/xinit/xinitrc.d ] ; then
- for f in /etc/X11/xinit/xinitrc.d/?*.sh ; do
-  [ -x "$f" ] && . "$f"
- done
- unset f
+if [ -d /etc/X11/xinit/xinitrc.d ]; then
+    for f in /etc/X11/xinit/xinitrc.d/?*.sh ; do
+        [ -x "$f" ] && . "$f"
+    done
+    unset f
 fi
 
+# default termional application
 export TERMINAL=alacritty
 
+# IME settings
 export GTK_IM_MODULE=fcitx
 export QT_IM_MODULE=fcitx
 export XMODIFIERS="@im=fcitx"
 
+# generate config for i3
+$HOME/.config/i3/mkconfig
+
+compton -b --vsync=none
+
 exec i3
 EOF
 
-if ! tail -n 1 $HOME/.bash_profile | grep -sq startx; then
-    cat <<'EOF' >> $HOME/.bash_profile
-
-[[ -z $DISPLAY && $(tty) == /dev/tty1 ]] && exec startx
-EOF
+cat <<'EOF' >$HOME/.profile.d/99-x11.sh
+if [ -z "$DISPLAY" ] && [ "$(tty)" = /dev/tty1 ]; then
+    exec startx
 fi
+EOF
 
 git_clone git@github.com:masnagam/i3-config.git $HOME/.config/i3
