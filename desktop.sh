@@ -112,10 +112,4 @@ compton -b --vsync=none
 exec i3
 EOF
 
-cat <<'EOF' >$HOME/.profile.d/99-x11.sh
-if [ -z "$DISPLAY" ] && [ "$(tty)" = /dev/tty1 ]; then
-    exec startx
-fi
-EOF
-
 git_clone git@github.com:masnagam/i3-config.git $HOME/.config/i3
