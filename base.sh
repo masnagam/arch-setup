@@ -78,9 +78,13 @@ fi
 
 export PATH=$HOME/bin:$PATH
 
-[[ -f $HOME/.bashrc ]] && . $HOME/.bashrc
+if [ -f $HOME/.bashrc ]; then
+    . $HOME/.bashrc
+fi
 
-[[ -z "$DISPLAY" ] && [ "$(tty)" = /dev/tty1 ]] exec startx
+if [ -z "$DISPLAY" ] && [ "$(tty)" = /dev/tty1 ]; then
+    exec startx
+fi
 EOF
 
 echo 'Installing .bash_aliases...'
