@@ -23,7 +23,7 @@ install rofi
 
 # Terminal Emulator
 
-install alacritty
+install sakura
 
 # Fonts
 
@@ -96,8 +96,8 @@ if [ -d /etc/X11/xinit/xinitrc.d ]; then
     unset f
 fi
 
-# default termional application
-export TERMINAL=alacritty
+# default terminal application
+export TERMINAL=sakura
 
 # IME settings
 export GTK_IM_MODULE=fcitx
