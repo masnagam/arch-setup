@@ -52,7 +52,7 @@ install pulseaudio-alsa
 # compositor
 
 install glxinfo
-install compton
+install xcompmgr
 
 # Web Browsers
 
@@ -107,7 +107,7 @@ export XMODIFIERS="@im=fcitx"
 # generate config for i3
 $HOME/.config/i3/mkconfig
 
-compton -b --vsync=none
+xcompmgr -c -n &
 
 exec i3
 EOF

@@ -2,7 +2,7 @@
 # See LICENSE file in the project root for details.
 
 install() {
-    yay -Qs $1 >/dev/null 2>&1 || yay -S $1
+    yay -Qs $1 >/dev/null 2>&1 || yay -Sy $1
 }
 
 git_clone() {
