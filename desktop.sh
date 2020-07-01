@@ -46,11 +46,6 @@ install alsa-utils
 install pulseaudio
 install pulseaudio-alsa
 
-# compositor
-
-install glxinfo
-install xcompmgr
-
 # Web Browsers
 
 install google-chrome
@@ -103,8 +98,6 @@ export XMODIFIERS="@im=fcitx"
 
 # generate config for i3
 $HOME/.config/i3/mkconfig
-
-xcompmgr -c -n &
 
 exec i3
 EOF
