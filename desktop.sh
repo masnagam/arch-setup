@@ -16,7 +16,7 @@ install xsel
 
 # i3
 
-install i3-wm
+install i3-gaps
 install dex
 install i3blocks
 install rofi
@@ -27,15 +27,12 @@ install sakura
 
 # Fonts
 
+install noto-fonts
 install noto-fonts-cjk
 install noto-fonts-emoji
+install noto-fonts-extra
 install ttf-font-awesome
 install ttf-myrica
-
-sudo ln -sf /etc/fonts/conf.avail/66-noto-mono.conf /etc/fonts/conf.d/
-sudo ln -sf /etc/fonts/conf.avail/66-noto-sans.conf /etc/fonts/conf.d/
-sudo ln -sf /etc/fonts/conf.avail/66-noto-serif.conf /etc/fonts/conf.d/
-sudo ln -sf /etc/fonts/conf.avail/70-noto-cjk.conf /etc/fonts/conf.d/
 
 # Input Method
 
