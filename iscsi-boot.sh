@@ -4,10 +4,8 @@ PORTAL="$1"
 TARGET="$2"
 INITIATOR="$3"
 
-source $(dirname $0)/common.sh
-
 echo 'Installing open-iscsi...'
-install open-iscsi
+pacman -Sy open-iscsi
 
 echo 'Installing /usr/lib/initcpio/install/iscsi...'
 cat <<'EOF' >/usr/lib/initcpio/install/iscsi
