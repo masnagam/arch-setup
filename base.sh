@@ -11,7 +11,9 @@ if ! which yay >/dev/null 2>&1; then
 fi
 
 install bash-completion
+install cifs-utils
 install direnv
+install inetutils
 install systemd-boot-pacman-hook
 install trash-cli
 install unzip
