@@ -23,7 +23,7 @@ install rofi
 
 # Terminal Emulator
 
-install alacritty
+install rxvt-unicode
 
 # Fonts
 
@@ -51,8 +51,9 @@ install pulseaudio-alsa
 install google-chrome
 install firefox
 
-# Configurations
+mkdir -p $HOME/.Xresources.d
 
+echo 'Creating .xinitrc...'
 cat <<'EOF' >$HOME/.xinitrc
 #!/bin/sh
 
@@ -89,10 +90,7 @@ if [ -d /etc/X11/xinit/xinitrc.d ]; then
 fi
 
 # default terminal application
-export TERMINAL=alacritty
-
-# Override the TERM environment variable for avoiding issues in SSH sessions.
-export TERM=xterm-256color
+export TERMINAL=urxvt
 
 # IME settings
 export GTK_IM_MODULE=fcitx
@@ -105,4 +103,31 @@ $HOME/.config/i3/mkconfig
 exec i3
 EOF
 
+echo 'Installing .config/i3 from masnagam/i3-config...'
 git_clone git@github.com:masnagam/i3-config.git $HOME/.config/i3
+
+echo "Creating .Xresources.d/color-theme..."
+curl -fsSL https://raw.githubusercontent.com/solarized/xresources/master/Xresources.dark >$HOME/.Xresources.d/color-theme
+
+echo 'Creating .Xresources.d/urxvt...'
+cat <<EOF >$HOME/.Xresources.d/urxvt
+URxvt.depth: 32
+URxvt.fading: 40
+URxvt.pointerBlank: true
+URxvt.saveLines: 5000
+URxvt.scrollBar_floating: true
+URxvt.scrollBar_right: true
+URxvt.scrollTtyKeypress: true
+URxvt.scrollTtyOutput: false
+URxvt.scrollWithBuffer: true
+URxvt.scrollstyle: plain
+URxvt.visualBell: true
+EOF
+
+cat <<EOF
+Done.
+
+Add the following lines in .Xresources:
+#include ".Xresources.d/color-theme"
+#include ".Xresources.d/urxvt"
+EOF
