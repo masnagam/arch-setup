@@ -18,7 +18,7 @@ install xsel
 
 install i3-gaps
 install dex
-install i3blocks
+install i3status-rust
 install rofi
 
 # Terminal Emulator
@@ -31,8 +31,8 @@ install noto-fonts
 install noto-fonts-cjk
 install noto-fonts-emoji
 install noto-fonts-extra
-install ttf-font-awesome
-install ttf-myrica
+install ttf-font-awesome-4
+install ttf-sarasa-gothic
 
 # Input Method
 
